@@ -16,6 +16,14 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
             configureView()
         }
     }
+    @IBOutlet var weekdays: [UIButton]!
+    @IBAction func weekdayAction(_ sender: UIButton) {
+        if sender.tintColor == UIColor.red {
+            sender.tintColor = UIColor.green
+        } else {
+            sender.tintColor = UIColor.red
+        }
+    }
     
     // ---- text outlets
     @IBOutlet weak var inputMorgen: UITextField!
@@ -53,6 +61,11 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
             var somePicker = UIPickerView()
             pickers.append(somePicker)
             inputs[i].inputView = somePicker
+        }
+        
+        for btn in weekdays{
+            print("Changing button: \(btn.titleLabel!)")
+            btn.tintColor = UIColor.red
         }
         
         /*
@@ -103,6 +116,11 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        view.endEditing(true)
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
