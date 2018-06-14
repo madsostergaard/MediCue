@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		090BE45A20D2884C008C33E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 090BE45920D2884B008C33E2 /* GoogleService-Info.plist */; };
+		090BE45C20D291B5008C33E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 090BE45B20D291B5008C33E2 /* GoogleService-Info.plist */; };
 		09B6A0E720D27EE8001E8556 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B6A0E620D27EE8001E8556 /* AppDelegate.swift */; };
 		09B6A0EC20D27EE8001E8556 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09B6A0EA20D27EE8001E8556 /* Main.storyboard */; };
 		09B6A0EE20D27EEA001E8556 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09B6A0ED20D27EEA001E8556 /* Assets.xcassets */; };
@@ -50,7 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		090BE45920D2884B008C33E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		090BE45B20D291B5008C33E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09B6A0E320D27EE8001E8556 /* MediCue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediCue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09B6A0E620D27EE8001E8556 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09B6A0EB20D27EE8001E8556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -147,7 +147,7 @@
 				09B6A0EF20D27EEA001E8556 /* LaunchScreen.storyboard */,
 				09B6A0F220D27EEA001E8556 /* Info.plist */,
 				09B6A11420D28095001E8556 /* ObjCBridge.h */,
-				090BE45920D2884B008C33E2 /* GoogleService-Info.plist */,
+				090BE45B20D291B5008C33E2 /* GoogleService-Info.plist */,
 				09B6A11520D280F1001E8556 /* SettingsTableViewController.swift */,
 				09B6A11720D28135001E8556 /* SetTimesTableViewController.swift */,
 				09B6A11920D28171001E8556 /* ProgressViewController.swift */,
@@ -320,7 +320,7 @@
 				09B6A0F120D27EEA001E8556 /* LaunchScreen.storyboard in Resources */,
 				09B6A0EE20D27EEA001E8556 /* Assets.xcassets in Resources */,
 				09B6A0EC20D27EE8001E8556 /* Main.storyboard in Resources */,
-				090BE45A20D2884C008C33E2 /* GoogleService-Info.plist in Resources */,
+				090BE45C20D291B5008C33E2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
