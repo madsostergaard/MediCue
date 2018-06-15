@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Oy</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need dis</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Woop woop</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>Vi har brug for adgang til din kalender</string>
 	<key>CFBundleDevelopmentRegion</key>
