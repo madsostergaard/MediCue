@@ -837,7 +837,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R4M-XB-i8e">
-                                                    <rect key="frame" x="16" y="11" width="38" height="21"/>
+                                                    <rect key="frame" x="16" y="12.304347826086996" width="38" height="20.999999999999943"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -863,7 +863,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Slut" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xga-OE-A69">
-                                                    <rect key="frame" x="16" y="11" width="30" height="21"/>
+                                                    <rect key="frame" x="16" y="12.014492753623244" width="30" height="21.000000000000085"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -954,7 +954,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Morgen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zbh-qP-acf">
-                                                    <rect key="frame" x="16" y="11" width="59" height="21"/>
+                                                    <rect key="frame" x="16" y="12.217391304346393" width="59" height="20.999999999999943"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="uoa-yO-o5D"/>
                                                     </constraints>
@@ -984,7 +984,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Formiddag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iww-q4-o7L">
-                                                    <rect key="frame" x="16" y="12" width="83" height="21"/>
+                                                    <rect key="frame" x="16" y="11.927536231882641" width="83" height="20.999999999999957"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="cec-uq-Eg4"/>
                                                     </constraints>
@@ -1013,7 +1013,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Middag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsb-oB-51S">
-                                                    <rect key="frame" x="16" y="12" width="57.5" height="21"/>
+                                                    <rect key="frame" x="16" y="11.637681159418889" width="57.5" height="21.000000000000014"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="jCd-02-7es"/>
                                                     </constraints>
@@ -1042,7 +1042,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Eftermiddag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wzd-Xc-6gR">
-                                                    <rect key="frame" x="16" y="12" width="94" height="21"/>
+                                                    <rect key="frame" x="16" y="11.347826086955138" width="94" height="21.000000000000014"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="IEM-uE-lQE"/>
                                                     </constraints>
@@ -1071,7 +1071,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Aften" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EL7-n9-A0I">
-                                                    <rect key="frame" x="8" y="12" width="42" height="21"/>
+                                                    <rect key="frame" x="8" y="12.565217391302893" width="42" height="21.000000000000014"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="fiX-ly-doF"/>
                                                     </constraints>
@@ -1100,7 +1100,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Nat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLG-hm-U7E">
-                                                    <rect key="frame" x="8" y="11" width="27.5" height="21"/>
+                                                    <rect key="frame" x="8" y="12.275362318839143" width="27.5" height="20.99999999999995"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="PHw-Yo-7ao"/>
                                                     </constraints>
@@ -2198,18 +2198,6 @@
         <image name="progressLogo" width="25" height="25"/>
         <namedColor name="MainColor">
             <color red="0.33725490196078434" green="0.54117647058823526" blue="0.58039215686274515" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="MainColor">
-            <color red="0.33725490196078434" green="0.54117647058823526" blue="0.58039215686274515" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="SecondColor">
-            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="SecondColor">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="SecondColor">
-            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondColor">
             <color red="0.78039215689999997" green="0.78039215689999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
