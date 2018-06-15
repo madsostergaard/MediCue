@@ -16,6 +16,9 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
             configureView()
         }
     }
+    
+    var sourceController: AddMedicineViewController?
+    
     @IBOutlet var weekdays: [UIButton]!
     @IBAction func weekdayAction(_ sender: UIButton) {
         if sender.tintColor == UIColor.red {
@@ -58,7 +61,7 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
         }
         
         for i in 0...checks.count-1{
-            var somePicker = UIPickerView()
+            let somePicker = UIPickerView()
             pickers.append(somePicker)
             inputs[i].inputView = somePicker
         }
@@ -68,33 +71,14 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
             btn.tintColor = UIColor.red
         }
         
-        /*
-         pickers.append(inputMorgen.inputView as! UIPickerView)
-         pickers.append(inputFormiddag.inputView as! UIPickerView)
-         pickers.append(inputMiddag.inputView as! UIPickerView)
-         pickers.append(inputEftermiddag.inputView as! UIPickerView)
-         pickers.append(inputAften.inputView as! UIPickerView)
-         pickers.append(inputNat.inputView as! UIPickerView)*/
-        
         for ui in pickers{
             ui.delegate = self
         }
-        
-        //inputMorgen.inputView = uiPicker
-        //inputFormiddag.inputView = uiPicker
-        //inputMiddag.inputView = uiPicker
-        //inputEftermiddag.inputView = uiPicker
-        //inputAften.inputView = uiPicker
-        //inputNat.inputView = uiPicker
-        //uiPicker.delegate = self
         
         var i: Int = 0;
         for check in checks{
             print("userinteraction is checked")
             if (check?.on)!{
-                print("is enabled ", check?.isEnabled)
-                print(" is on", check?.on)
-                
                 inputs[i].isUserInteractionEnabled = true
                 print("allow is true for ", inputs[i].description)
             } else {
@@ -104,9 +88,6 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
             i = i+1
         }
         print("slut print \n")
-        print(checkMorgen.on)
-        print(checkMorgen.isEnabled)
-        
         
     }
     
@@ -119,7 +100,6 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         view.endEditing(true)
     }
     
@@ -130,10 +110,8 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return String(arr[row])
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        
-        
         inputs[pickers.index(of: pickerView)!].text = String(arr[row])
         
         // inputs[row].text = String(arr[row])
@@ -141,6 +119,7 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
         print("picker row: ", pickers.index(of: pickerView)!)
         
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
@@ -167,6 +146,76 @@ class AddMedicineTimesViewController: UITableViewController, UIPickerViewDelegat
             } else {
                 j = j + 1
             }
+        }
+    }
+    
+    // send the edited
+    override func viewWillDisappear(_ animated: Bool) {
+        // check weekdays
+        for btn in weekdays {
+            if let txt = btn.titleLabel?.text{
+                switch txt {
+                case "Man":
+                    if isBtnActivated(button: btn){
+                        med?.weekdays["Man"] = true
+                    }
+                    break
+                case "Tirs":
+                    if isBtnActivated(button: btn){
+                        med?.weekdays["Tirs"] = true
+                    }
+                    break
+                case "Ons":
+                    if isBtnActivated(button: btn){
+                        med?.weekdays["Ons"] = true
+                    }
+                    break
+                case "Tors":
+                    if isBtnActivated(button: btn){
+                        med?.weekdays["Tors"] = true
+                    }
+                    break
+                case "Fre":
+                    if isBtnActivated(button: btn){
+                        med?.weekdays["Fre"] = true
+                    }
+                    break
+                case "Lør":
+                    if isBtnActivated(button: btn){
+                        med?.weekdays["Lør"] = true
+                    }
+                    break
+                case "Søn":
+                    if isBtnActivated(button: btn){
+                        med?.weekdays["Søn"] = true
+                    }
+                    break
+                default:
+                    break
+                }
+            }
+        }
+        
+        // get times
+        var times = MedicineTimes()
+        times.morning = Int(inputMorgen.text!)
+        times.lateMorning = Int(inputFormiddag.text!)
+        times.midday = Int(inputMiddag.text!)
+        times.afternoon = Int(inputEftermiddag.text!)
+        times.evening = Int(inputAften.text!)
+        times.night = Int(inputNat.text!)
+        
+        med?.times = times
+        
+        // send information to source controller (if not nil)
+        sourceController?.med = self.med
+    }
+    
+    func isBtnActivated(button: UIButton) -> Bool {
+        if button.tintColor == .red{
+            return false
+        } else {
+            return true
         }
     }
 }

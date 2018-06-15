@@ -42,7 +42,7 @@ class MedicineDetailsViewController: UIViewController {
             case Medicine.MedicineType.pill:
                 image.image = UIImage(named: "pillIcon.pdf")
             case Medicine.MedicineType.tablet:
-                image.image = UIImage(named: "tabletIcon.pdf")
+                image.image = UIImage(named: "capsuleIcon.pdf")
             }
             
             

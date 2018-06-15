@@ -13,11 +13,18 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    let commands = ["MorningTime","FormiddagTime","MiddagTime",
+                    "EftermiddagTime","AftenTime","NatTime"]
+    let times = ["06:00","10:00","12:00","16:00","18:00","22:00"]
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        
+        /*for i in 0...commands.count-1 {
+            UserDefaults.standard.set(times[i], forKey: commands[i])
+        }*/
+        
         return true
     }
 

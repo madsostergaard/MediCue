@@ -47,21 +47,33 @@ class AddMedicineViewController: UIViewController {
         startDateTextField.inputView = beginDatePicker
         endDateTextField.inputView = endDatePicker
         
-        // Do any additional setup after loading the view.
+        let formatter = DateFormatter()
+        formatter.dateStyle = DateFormatter.Style.medium
+        formatter.timeStyle = DateFormatter.Style.none
+        startDateTextField.placeholder = "Eks: \(formatter.string(from: Date()))"
+        
+        if let thisMed = med {
+            nameTextField.text = thisMed.name
+            startDateTextField.text = thisMed.dateToString(from: thisMed.date!)
+            packageCountTextField.text = String(thisMed.size!)
+            
+            if let enddate = thisMed.endDate{
+                endDateTextField.text = thisMed.dateToString(from: enddate)
+            }
+        }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toTidspunkt" {
+        if segue.identifier == "toSetTimes" {
             
             // create a MedicineTimes object and set interval
-            var medTimesTemp = MedicineTimes.init()
+            let medTimesTemp = MedicineTimes.init()
             
             //print(interval.titleForSegment(at: interval.selectedSegmentIndex)!)
             
-            medTimesTemp.frequency = MedicineTimes.interval(rawValue: interval.titleForSegment(at: interval.selectedSegmentIndex)!)
-            
-            
-            
             let testMed = Medicine(name: "TestMed")
+            
+            testMed?.frequency = MedicineTimes.interval(rawValue: interval.titleForSegment(at: interval.selectedSegmentIndex)!)
+            
             let medType: Medicine.MedicineType
             // print(medTimesTemp.frequency!)
             let typeString = typeSegmentedControl.titleForSegment(at: typeSegmentedControl.selectedSegmentIndex)!
@@ -76,22 +88,21 @@ class AddMedicineViewController: UIViewController {
             let med = Medicine(name: nameTextField.text!,
                                size: Int(packageCountTextField.text!),
                                date: testMed?.stringToDate(from: startDateTextField.text!),
-                               endDate: testMed?.stringToDate(from: endDateTextField.text!),
                                medType: medType,
                                medTimes: medTimesTemp)
             
-            let nav = segue.destination as! UINavigationController
-            if nav.topViewController != nil {
-                print("TOPVIEW NOT NIL")
+            if activateEndDateSwitch.isOn{
+                med?.endDate = med?.stringToDate(from: endDateTextField.text!)
             }
-            else {
-                print("TOPVIEW NIL")
-            }
-            if let addMedicineTimes = nav.topViewController as? AddMedicineTimesViewController {
+            
+            // get the destination object and set the sourceController to this object
+            let nav = segue.destination as? AddMedicineTimesViewController
+            if let addMedicineTimes = nav {
                 addMedicineTimes.med = med
+                addMedicineTimes.sourceController = self
             }
             else {
-                print("NOT ADDMEDICINEVC")
+                print("NOT ADDMEDICINEVC (i.e. nil)")
             }
             
         }

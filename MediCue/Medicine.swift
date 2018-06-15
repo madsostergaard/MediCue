@@ -15,7 +15,7 @@ struct MedicineTimes {
     var midday: Int? = 0
     var afternoon: Int? = 0
     var evening: Int? = 0
-    var frequency: interval?
+    var night: Int? = 0
     
     enum interval: String {
         case daily = "Dagligt"
@@ -27,7 +27,7 @@ struct MedicineTimes {
 class Medicine: NSObject{
     var ref: String = ""
     var name: String
-    var size: Int?{
+    var size: Int? {
         didSet{
             if let num = size{
                 pillState = num
@@ -44,6 +44,8 @@ class Medicine: NSObject{
             }
         }
     }
+    var frequency: MedicineTimes.interval?
+    var weekdays: [String: Bool] = ["Man": false, "Tirs": false, "Ons" : false, "Tors" : false, "Fre" : false, "Lør" : false, "Søn": false]
     var date: Date?
     var endDate: Date? = Date.distantFuture
     var times: MedicineTimes?
@@ -91,23 +93,32 @@ class Medicine: NSObject{
             medType = MedicineType.tablet
         }
         
+        let freqString = snapshotValues["frequency"] as? String
+        //        print(freqString!)
+        if freqString == MedicineTimes.interval.daily.rawValue{
+            frequency = MedicineTimes.interval.daily
+        } else if freqString == MedicineTimes.interval.secondDay.rawValue{
+            frequency = MedicineTimes.interval.secondDay
+        } else {
+            frequency = MedicineTimes.interval.weekly
+        }
+        
         ref = snapshotValues["ref"] as! String
+        
+        let weekdayValues = snapshot.childSnapshot(forPath: "weekdays").value as! [String : AnyObject]
+        weekdays["Man"] = weekdayValues["Man"] as? Bool
+        weekdays["Tirs"] = weekdayValues["Tirs"] as? Bool
+        weekdays["Ons"] = weekdayValues["Ons"] as? Bool
+        weekdays["Tors"] = weekdayValues["Tors"] as? Bool
+        weekdays["Fre"] = weekdayValues["Fre"] as? Bool
+        weekdays["Lør"] = weekdayValues["Lør"] as? Bool
+        weekdays["Søn"] = weekdayValues["Søn"] as? Bool
         
         // get the medicine times:
         let medtimesValues = snapshot.childSnapshot(forPath: "medTimes").value as! [String: AnyObject]
-        //        print(medtimesValues)
         var newTimes = MedicineTimes.init()
         newTimes.afternoon = medtimesValues["afternoon"] as? Int
         newTimes.evening = medtimesValues["evening"] as? Int
-        let freqString = medtimesValues["frequency"] as? String
-        //        print(freqString!)
-        if freqString == MedicineTimes.interval.daily.rawValue{
-            newTimes.frequency = MedicineTimes.interval.daily
-        } else if freqString == MedicineTimes.interval.secondDay.rawValue{
-            newTimes.frequency = MedicineTimes.interval.secondDay
-        } else {
-            newTimes.frequency = MedicineTimes.interval.weekly
-        }
         newTimes.lateMorning = medtimesValues["lateMorning"] as? Int
         newTimes.midday = medtimesValues["midday"] as? Int
         newTimes.morning = medtimesValues["morning"] as? Int
@@ -124,14 +135,23 @@ class Medicine: NSObject{
             "endDate" : dateToString(from: endDate!),
             "medType" : medType?.rawValue ?? "pill",
             "ref" : ref,
+            "weekdays" : [
+                "Man" : weekdays["Man"]!,
+                "Tirs" : weekdays["Tirs"]!,
+                "Ons" : weekdays["Ons"]!,
+                "Tors" : weekdays["Tors"]!,
+                "Fre" : weekdays["Fre"]!,
+                "Lør" : weekdays["Lør"]!,
+                "Søn" : weekdays["Søn"]!
+            ],
             "medTimes" : [
                 "morning" : times!.morning!,
                 "lateMorning" : times!.lateMorning!,
                 "midday" : times!.midday!,
                 "afternoon" : times!.afternoon!,
                 "evening": times!.evening!,
-                "frequency" : times!.frequency?.rawValue ?? "daily"
-            ]
+            ],
+            "frequency" : frequency?.rawValue ?? MedicineTimes.interval.daily.rawValue
         ]
     }
     

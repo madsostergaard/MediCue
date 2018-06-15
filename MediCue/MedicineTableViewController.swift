@@ -55,7 +55,7 @@ class MedicineTableViewController: UITableViewController {
         var medtimes = MedicineTimes.init()
         medtimes.morning = 1
         medtimes.evening = 2
-        medtimes.frequency = MedicineTimes.interval.daily
+        //medtimes.frequency = MedicineTimes.interval.daily
         
         let med = Medicine(name: "Panodil", size: 20, date: Date(timeIntervalSinceNow: 0), medType: Medicine.MedicineType.pill, medTimes: medtimes)
         
@@ -97,23 +97,28 @@ class MedicineTableViewController: UITableViewController {
         let thisMedicine = medArr[indexPath.row]
         
         cell.medicineNameLabel?.text = thisMedicine.name
-        cell.medicineFreqLabel?.text = thisMedicine.times?.frequency?.rawValue
+        cell.medicineFreqLabel?.text = thisMedicine.frequency?.rawValue
         
         if let thisType = thisMedicine.medType{
-            switch thisType{
+            switch thisType {
             case Medicine.MedicineType.injektion:
                 cell.medicineIcon.image = UIImage(named: "injectionIcon.pdf")
             case Medicine.MedicineType.pill:
                 cell.medicineIcon.image = UIImage(named: "pillIcon.pdf")
             case Medicine.MedicineType.tablet:
-                cell.medicineIcon.image = UIImage(named: "tabletIcon.pdf")
+                cell.medicineIcon.image = UIImage(named: "capsuleIcon.pdf")
             }}
         
         return cell
     }
     
     @IBAction func unwindToMedicineTableView(segue: UIStoryboardSegue){
-        
+        if segue.identifier == "addMedicineSegue" {
+            let sourceController = segue.source as! AddMedicineViewController
+            if let newMedicine = sourceController.med{
+                save(medicine: newMedicine)
+            }
+        }
     }
     
     
