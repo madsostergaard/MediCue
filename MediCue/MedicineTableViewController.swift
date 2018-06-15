@@ -170,7 +170,7 @@ class MedicineTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "toMedDetails"{
+        if segue.identifier == "toDetails"{
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 print("Prepare to send object to details")
                 let detailedMed = medArr[indexPath.row]
