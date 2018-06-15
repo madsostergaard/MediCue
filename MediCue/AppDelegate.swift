@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import EventKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,17 +17,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let commands = ["MorningTime","FormiddagTime","MiddagTime",
                     "EftermiddagTime","AftenTime","NatTime"]
     let times = ["06:00","10:00","12:00","16:00","18:00","22:00"]
+
+    var eventstore: EKEventStore!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
-        /*for i in 0...commands.count-1 {
-            UserDefaults.standard.set(times[i], forKey: commands[i])
-        }*/
+        eventstore = EKEventStore()
+        
+        // check if we have access to calendars, and create a calendar for the app.
+        eventstore.requestAccess(to: .reminder) { (granted, error) in
+            if granted {
+                print("access granted")
+                let newCalendar = EKCalendar(for: .reminder, eventStore: self.eventstore!)
+                
+                newCalendar.title = "MediCue Kalender"
+                
+                let sourcesInEventStore = self.eventstore.sources
+                
+                let filteredSources = sourcesInEventStore.filter { $0.sourceType == .local }
+                
+                if let localSource = filteredSources.first {
+                    newCalendar.source = localSource
+                } else {
+                    print("local source was nil")
+                    newCalendar.source = self.eventstore.defaultCalendarForNewReminders()?.source
+                }
+    
+                var exists = false
+                let cals = self.eventstore.calendars(for: .reminder)
+                for c in cals{
+                    if let id = UserDefaults.standard.string(forKey: "MediCuePrimaryCalendar"){
+                        if c.calendarIdentifier == id{
+                            print("We already had a calendar")
+                            exists = true
+                        }
+                    }
+                }
+                if !exists{
+                do {
+                    try self.eventstore.saveCalendar(newCalendar, commit: true)
+                    UserDefaults.standard.set(newCalendar.calendarIdentifier, forKey: "MediCuePrimaryCalendar")
+                }
+                catch{
+                    print(error)
+                    }}
+                
+            } else {
+                print(error!)
+            }
+        }
+        print("Done!")
         
         return true
     }
+
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
