@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		090BE45C20D291B5008C33E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 090BE45B20D291B5008C33E2 /* GoogleService-Info.plist */; };
+		09851D5920D3AB800031FFEB /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09851D5820D3AB800031FFEB /* CustomCell.swift */; };
 		09B6A0E720D27EE8001E8556 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B6A0E620D27EE8001E8556 /* AppDelegate.swift */; };
 		09B6A0EC20D27EE8001E8556 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09B6A0EA20D27EE8001E8556 /* Main.storyboard */; };
 		09B6A0EE20D27EEA001E8556 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09B6A0ED20D27EEA001E8556 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		090BE45B20D291B5008C33E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		09851D5820D3AB800031FFEB /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		09B6A0E320D27EE8001E8556 /* MediCue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediCue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09B6A0E620D27EE8001E8556 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09B6A0EB20D27EE8001E8556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -141,26 +143,27 @@
 		09B6A0E520D27EE8001E8556 /* MediCue */ = {
 			isa = PBXGroup;
 			children = (
-				09B6A0E620D27EE8001E8556 /* AppDelegate.swift */,
-				09B6A0EA20D27EE8001E8556 /* Main.storyboard */,
-				09B6A0ED20D27EEA001E8556 /* Assets.xcassets */,
-				09B6A0EF20D27EEA001E8556 /* LaunchScreen.storyboard */,
-				09B6A0F220D27EEA001E8556 /* Info.plist */,
-				09B6A11420D28095001E8556 /* ObjCBridge.h */,
-				090BE45B20D291B5008C33E2 /* GoogleService-Info.plist */,
-				09B6A11520D280F1001E8556 /* SettingsTableViewController.swift */,
-				09B6A11720D28135001E8556 /* SetTimesTableViewController.swift */,
-				09B6A11920D28171001E8556 /* ProgressViewController.swift */,
-				09B6A11B20D281B4001E8556 /* MedicineTableViewController.swift */,
-				09B6A11D20D281DF001E8556 /* MedicineDetailsViewController.swift */,
-				09B6A11F20D28231001E8556 /* Medicine.swift */,
-				09B6A12120D2827D001E8556 /* MainTabViewController.swift */,
-				09B6A12320D282C5001E8556 /* LoginViewController.swift */,
-				09B6A12520D28300001E8556 /* HomeViewController.swift */,
-				09B6A12720D28330001E8556 /* DatePickerController.swift */,
-				09B6A12920D2839C001E8556 /* CalendarViewController.swift */,
-				09B6A12B20D283E3001E8556 /* AddMedicineViewController.swift */,
 				09B6A12D20D28420001E8556 /* AddMedicineTimesViewController.swift */,
+				09B6A12B20D283E3001E8556 /* AddMedicineViewController.swift */,
+				09B6A0E620D27EE8001E8556 /* AppDelegate.swift */,
+				09B6A0ED20D27EEA001E8556 /* Assets.xcassets */,
+				09B6A12920D2839C001E8556 /* CalendarViewController.swift */,
+				09851D5820D3AB800031FFEB /* CustomCell.swift */,
+				09B6A12720D28330001E8556 /* DatePickerController.swift */,
+				090BE45B20D291B5008C33E2 /* GoogleService-Info.plist */,
+				09B6A12520D28300001E8556 /* HomeViewController.swift */,
+				09B6A0F220D27EEA001E8556 /* Info.plist */,
+				09B6A0EF20D27EEA001E8556 /* LaunchScreen.storyboard */,
+				09B6A12320D282C5001E8556 /* LoginViewController.swift */,
+				09B6A0EA20D27EE8001E8556 /* Main.storyboard */,
+				09B6A12120D2827D001E8556 /* MainTabViewController.swift */,
+				09B6A11F20D28231001E8556 /* Medicine.swift */,
+				09B6A11D20D281DF001E8556 /* MedicineDetailsViewController.swift */,
+				09B6A11B20D281B4001E8556 /* MedicineTableViewController.swift */,
+				09B6A11420D28095001E8556 /* ObjCBridge.h */,
+				09B6A11920D28171001E8556 /* ProgressViewController.swift */,
+				09B6A11720D28135001E8556 /* SetTimesTableViewController.swift */,
+				09B6A11520D280F1001E8556 /* SettingsTableViewController.swift */,
 			);
 			path = MediCue;
 			sourceTree = "<group>";
@@ -279,6 +282,11 @@
 					09B6A0E220D27EE8001E8556 = {
 						CreatedOnToolsVersion = 9.4;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					09B6A0F620D27EEA001E8556 = {
 						CreatedOnToolsVersion = 9.4;
@@ -435,6 +443,7 @@
 				09B6A12020D28231001E8556 /* Medicine.swift in Sources */,
 				09B6A12E20D28420001E8556 /* AddMedicineTimesViewController.swift in Sources */,
 				09B6A12220D2827D001E8556 /* MainTabViewController.swift in Sources */,
+				09851D5920D3AB800031FFEB /* CustomCell.swift in Sources */,
 				09B6A11620D280F1001E8556 /* SettingsTableViewController.swift in Sources */,
 				09B6A11E20D281DF001E8556 /* MedicineDetailsViewController.swift in Sources */,
 				09B6A12620D28300001E8556 /* HomeViewController.swift in Sources */,
