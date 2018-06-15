@@ -42,7 +42,7 @@ class MedicineDetailsViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("thismedicine name: ", thisMedicine?.name)
+      //  print("thismedicine name: ", thisMedicine?.name)
         
         
         configureView()
