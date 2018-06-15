@@ -674,11 +674,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="76.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="injectionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2dJ-dJ-RhK">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="injectionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2dJ-dJ-RhK">
                                                     <rect key="frame" x="16" y="2" width="72" height="72"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DU0-8j-65s">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DU0-8j-65s">
                                                     <rect key="frame" x="147" y="23" width="66.5" height="31.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                     <nil key="textColor"/>
@@ -687,6 +686,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="DU0-8j-65s" firstAttribute="centerX" secondItem="ETu-PS-4Cu" secondAttribute="centerX" constant="20.25" id="NSB-AM-ouf"/>
+                                                <constraint firstItem="DU0-8j-65s" firstAttribute="leading" secondItem="2dJ-dJ-RhK" secondAttribute="trailing" constant="59" id="RDC-wd-Iy8"/>
+                                                <constraint firstItem="DU0-8j-65s" firstAttribute="top" secondItem="ETu-PS-4Cu" secondAttribute="topMargin" constant="12" id="chC-BL-Kam"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="DU0-8j-65s" secondAttribute="trailing" constant="90.5" id="euH-Jr-LF6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -694,14 +696,6 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Dato" id="zAJ-lE-wYp" colorLabel="IBBuiltInLabel-Orange">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="0.0" id="90t-sd-spS">
-                                        <rect key="frame" x="0.0" y="105" width="320" height="0.0"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="90t-sd-spS" id="JSG-pC-8uQ">
-                                            <rect key="frame" x="0.0" y="-0.5" width="320" height="0.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="fsF-cl-Guo">
                                         <rect key="frame" x="0.0" y="105" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
