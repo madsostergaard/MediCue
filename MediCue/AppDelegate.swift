@@ -11,7 +11,7 @@ import Firebase
 import EventKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate {
 
     var window: UIWindow?
     let commands = ["MorningTime","FormiddagTime","MiddagTime",
@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let times = ["06:00","10:00","12:00","16:00","18:00","22:00"]
 
     var eventstore: EKEventStore!
+    let triggerManager = ESTTriggerManager()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -68,9 +69,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(error!)
             }
         }
+        
+        self.triggerManager.delegate = self
+        let rule1 = ESTOrientationRule.orientationEquals(.horizontalUpsideDown, forNearableIdentifier: "3a5bec086df14f2e")
+        let rule2 = ESTMotionRule.motionStateEquals(true, forNearableIdentifier: "3a5bec086df14f2e")
+        let trigger = ESTTrigger(rules: [rule1], identifier: "tom the trigger")
+        self.triggerManager.startMonitoring(for: trigger)
+        
         print("Done!")
         
         return true
+    }
+    
+    func triggerManager(_ manager: ESTTriggerManager,
+                        triggerChangedState trigger: ESTTrigger) {
+        if (trigger.identifier == "tom the trigger" && trigger.state == true) {
+            print("Hello, digital world! The physical world has spoken.")
+        } else {
+            print("Goodnight. <spoken in the voice of a turret from Portal>")
+        }
     }
 
 
