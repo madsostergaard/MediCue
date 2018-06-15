@@ -8,10 +8,30 @@
 
 import UIKit
 
-class MedicineDetailsViewController: UIViewController {
+class MedicineDetailsViewController: UITableViewController{
     
     @IBOutlet weak var typeImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    // Date labels
+    @IBOutlet weak var datoStartLabel: UILabel!
+    @IBOutlet weak var datoSlutLabel: UILabel!
+    // Day Labels
+    @IBOutlet weak var manLabel: UIButton!
+    @IBOutlet weak var tirsLabel: UIButton!
+    @IBOutlet weak var onsLabel: UIButton!
+    @IBOutlet weak var torLabel: UIButton!
+    @IBOutlet weak var freLabel: UIButton!
+    @IBOutlet weak var lørLabel: UIButton!
+    @IBOutlet weak var sønLabel: UIButton!
+    
+    // Day times Labels
+    @IBOutlet weak var morgenLabel: UILabel!
+    @IBOutlet weak var formiddagLabel: UILabel!
+    @IBOutlet weak var middagLabel: UILabel!
+    @IBOutlet weak var eftermiddagLabel: UILabel!
+    @IBOutlet weak var aftenLAbel: UILabel!
+    @IBOutlet weak var natLabel: UILabel!
+    
     
     var thisMedicine: Medicine?{
         didSet{
@@ -21,6 +41,9 @@ class MedicineDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("thismedicine name: ", thisMedicine?.name)
+        
         
         configureView()
         // Do any additional setup after loading the view.
@@ -32,9 +55,10 @@ class MedicineDetailsViewController: UIViewController {
     }
     
     func configureView(){
-        if let medicine = thisMedicine, let label = self.nameLabel, let image = typeImageView, let type = medicine.medType{
+        print("configuring view")
+        if let medicine = thisMedicine, let nameLabel = self.nameLabel, let image = typeImageView, let type = medicine.medType{
             
-            label.text = medicine.name
+           nameLabel.text = medicine.name
             
             switch type{
             case Medicine.MedicineType.injektion:
@@ -45,20 +69,57 @@ class MedicineDetailsViewController: UIViewController {
                 image.image = UIImage(named: "capsuleIcon.pdf")
             }
             
+            //set first section
+            //nameLabel.text = medicine.name
+            print("name sat to:", medicine.name)
             
+            // set second section
+            datoStartLabel.text = medicine.dateToString(from: medicine.date!)
+            datoSlutLabel.text = medicine.dateToString(from: medicine.endDate!)
+            // set third section
+            if medicine.weekdays["Man"]! == true{
+                manLabel.tintColor = .green
+            } else {
+                manLabel.tintColor = .red
+            }
+            if medicine.weekdays["Tirs"]! == true{
+                tirsLabel.tintColor = .green
+            } else {
+                tirsLabel.tintColor = .red
+            }
+            if medicine.weekdays["Ons"]! == true{
+                onsLabel.tintColor = .green
+            } else {
+                onsLabel.tintColor = .red
+            }
+            if medicine.weekdays["Tors"]! == true{
+                torLabel.tintColor = .green
+            } else {
+                torLabel.tintColor = .red
+            }
+            if medicine.weekdays["Fre"]! == true{
+                freLabel.tintColor = .green
+            } else {
+                freLabel.tintColor = .red
+            }
+            if medicine.weekdays["Lør"]! == true{
+                lørLabel.tintColor = .green
+            } else {
+                lørLabel.tintColor = .red
+            }
+            if medicine.weekdays["Søn"]! == true{
+                sønLabel.tintColor = .green
+            } else {
+                sønLabel.tintColor = .red
+            }
+            
+            // Set Day times Labels
+            morgenLabel.text = String((medicine.times?.morning)!)
+            formiddagLabel.text = String((medicine.times?.lateMorning)!)
+            middagLabel.text = String((medicine.times?.midday)!)
+            eftermiddagLabel.text = String((medicine.times?.afternoon)!)
+            aftenLAbel.text = String((medicine.times?.evening)!)
+            natLabel.text = String((medicine.times?.night)!)
         }
-        
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
