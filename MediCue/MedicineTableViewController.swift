@@ -176,7 +176,7 @@ class MedicineTableViewController: UITableViewController {
                 let detailedMed = medArr[indexPath.row]
                 
                 let medicineDetailsViewController = segue.destination as! MedicineDetailsViewController
-                
+                print("(prepare)medicine sent: ", detailedMed.name, detailedMed.medType!, detailedMed.dateToString(from: detailedMed.date!))
                 medicineDetailsViewController.thisMedicine = detailedMed
             }
         }

@@ -55,9 +55,10 @@ class MedicineDetailsViewController: UITableViewController{
     }
     
     func configureView(){
-        if let medicine = thisMedicine, let label = self.nameLabel, let image = typeImageView, let type = medicine.medType{
+        print("configuring view")
+        if let medicine = thisMedicine, let nameLabel = self.nameLabel, let image = typeImageView, let type = medicine.medType{
             
-            label.text = medicine.name
+           nameLabel.text = medicine.name
             
             switch type{
             case Medicine.MedicineType.injektion:
@@ -66,25 +67,59 @@ class MedicineDetailsViewController: UITableViewController{
                 image.image = UIImage(named: "pillIcon.pdf")
             case Medicine.MedicineType.tablet:
                 image.image = UIImage(named: "capsuleIcon.pdf")
-                
-                //set first section
-                nameLabel.text = medicine.name
-                print("name sat to:", medicine.name)
-                
-                // set second section
-                datoStartLabel.text = medicine.dateToString(from: medicine.date!)
-                datoSlutLabel.text = medicine.dateToString(from: medicine.endDate!)
-                // set third section
-                if medicine.weekdays["Man"]! == true{
-                    manLabel.tintColor = .green
-                } else {
-                    manLabel.tintColor = .red
-                }
-                
-                
-                
-                
             }
+            
+            //set first section
+            //nameLabel.text = medicine.name
+            print("name sat to:", medicine.name)
+            
+            // set second section
+            datoStartLabel.text = medicine.dateToString(from: medicine.date!)
+            datoSlutLabel.text = medicine.dateToString(from: medicine.endDate!)
+            // set third section
+            if medicine.weekdays["Man"]! == true{
+                manLabel.tintColor = .green
+            } else {
+                manLabel.tintColor = .red
+            }
+            if medicine.weekdays["Tirs"]! == true{
+                tirsLabel.tintColor = .green
+            } else {
+                tirsLabel.tintColor = .red
+            }
+            if medicine.weekdays["Ons"]! == true{
+                onsLabel.tintColor = .green
+            } else {
+                onsLabel.tintColor = .red
+            }
+            if medicine.weekdays["Tors"]! == true{
+                torLabel.tintColor = .green
+            } else {
+                torLabel.tintColor = .red
+            }
+            if medicine.weekdays["Fre"]! == true{
+                freLabel.tintColor = .green
+            } else {
+                freLabel.tintColor = .red
+            }
+            if medicine.weekdays["Lør"]! == true{
+                lørLabel.tintColor = .green
+            } else {
+                lørLabel.tintColor = .red
+            }
+            if medicine.weekdays["Søn"]! == true{
+                sønLabel.tintColor = .green
+            } else {
+                sønLabel.tintColor = .red
+            }
+            
+            // Set Day times Labels
+            morgenLabel.text = String((medicine.times?.morning)!)
+            formiddagLabel.text = String((medicine.times?.lateMorning)!)
+            middagLabel.text = String((medicine.times?.midday)!)
+            eftermiddagLabel.text = String((medicine.times?.afternoon)!)
+            aftenLAbel.text = String((medicine.times?.evening)!)
+            natLabel.text = String((medicine.times?.night)!)
         }
     }
 }

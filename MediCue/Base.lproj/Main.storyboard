@@ -634,7 +634,7 @@
                                     <outlet property="medicineFreqLabel" destination="zY8-lJ-C4Q" id="6mT-jj-z3n"/>
                                     <outlet property="medicineIcon" destination="CGq-w1-LZ8" id="SR9-Uu-gCS"/>
                                     <outlet property="medicineNameLabel" destination="SCF-VE-9ZZ" id="Dlc-3D-xPl"/>
-                                    <segue destination="mZL-zS-PHC" kind="show" identifier="toDetail" id="OKb-X1-qoJ"/>
+                                    <segue destination="mZL-zS-PHC" kind="show" identifier="toDetails" id="OKb-X1-qoJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
