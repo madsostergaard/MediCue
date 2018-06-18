@@ -20,12 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
 
     var eventstore: EKEventStore!
     let triggerManager = ESTTriggerManager()
+    var ref: DatabaseReference!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
         eventstore = EKEventStore()
+        
         
         // check if we have access to calendars, and create a calendar for the app.
         eventstore.requestAccess(to: .reminder) { (granted, error) in
@@ -71,8 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
         }
         
         self.triggerManager.delegate = self
-        let rule1 = ESTOrientationRule.orientationEquals(.horizontalUpsideDown, forNearableIdentifier: "3a5bec086df14f2e")
-        let rule2 = ESTMotionRule.motionStateEquals(true, forNearableIdentifier: "3a5bec086df14f2e")
+        let rule1 = ESTOrientationRule.orientationEquals(.horizontalUpsideDown, for: .car)
+        //let rule3 = ESTProximityRule.inRangeOfNearableIdentifier("3a5bec086df14f2e")
         let trigger = ESTTrigger(rules: [rule1], identifier: "tom the trigger")
         self.triggerManager.startMonitoring(for: trigger)
         
@@ -85,9 +87,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
                         triggerChangedState trigger: ESTTrigger) {
         if (trigger.identifier == "tom the trigger" && trigger.state == true) {
             print("Hello, digital world! The physical world has spoken.")
+            makeAModalView(message: "Hello, digital world! The physical world has spoken.")
         } else {
             print("Goodnight. <spoken in the voice of a turret from Portal>")
+            makeAModalView(message: "Goodnight. <spoken in the voice of a turret from Portal>")
         }
+    }
+    
+    func makeAModalView(message: String){
+        let alert = UIAlertController(title: "Hello", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
 
 
