@@ -76,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
         let rule1 = ESTOrientationRule.orientationEquals(.horizontalUpsideDown, for: .car)
         //let rule3 = ESTProximityRule.inRangeOfNearableIdentifier("3a5bec086df14f2e")
         let trigger = ESTTrigger(rules: [rule1], identifier: "tom the trigger")
+        
         self.triggerManager.startMonitoring(for: trigger)
         
         print("Done!")
