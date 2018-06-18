@@ -237,6 +237,7 @@ class MedicineTableViewController: UITableViewController {
                     
                     var dateTemp = Date()
                     var date = Date()
+                    print(date)
                     
                     let timesTemp = userTimes[i].split(separator: ":")
                     if let hour = Int(timesTemp[0]), let minute = Int(timesTemp[1]){
@@ -244,6 +245,8 @@ class MedicineTableViewController: UITableViewController {
                         date = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: dateTemp)!
                     }
                     
+                    
+                    print(date)
                     print(Calendar.current.dateComponents([.weekday,.hour,.minute], from: date))
                     
                     let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute], from: date)

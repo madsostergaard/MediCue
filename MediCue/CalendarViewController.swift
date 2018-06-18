@@ -30,6 +30,7 @@ class CalendarViewController: UIViewController{
     var currentDate: Date = Date()
     let center = UNUserNotificationCenter.current()
     var requests = [UNNotificationRequest]()
+    var dataArray = [[String]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,11 +158,14 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        dataArray = [[String]]()
         handleCellSelected(view: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
         
         formatter.dateFormat = "dd MM yyyy, HH:mm"
+        let cellComp = Calendar.current.dateComponents([.weekday], from: date)
         print(formatter.string(from: date))
+        
         
         for req in requests{
             let trig = req.trigger as! UNCalendarNotificationTrigger
@@ -169,10 +173,16 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
             let reqdate = Calendar.current.date(from: dateComp)
             print(formatter.string(from: reqdate!))
             
-            if Calendar.current.isDate(date, equalTo: reqdate!, toGranularity: .weekday){
-                print("Hooray!")
+            if let cellWeek = cellComp.weekday, let reqWeek = dateComp.weekday{
+                if cellWeek == reqWeek {
+                    print("Added to model")
+                    formatter.dateFormat = "HH:mm"
+                    dataArray.append([req.content.title, formatter.string(from: reqdate!)])
+                }
             }
         }
+        
+        reminderView.reloadData()
         
         cell?.bounce()
     }
@@ -181,7 +191,8 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
         handleCellSelected(view: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
         
-        
+        dataArray = [[String]]()
+        print("Refreshed data model")
         
         cell?.bounce()
     }
@@ -211,12 +222,20 @@ extension CalendarViewController: UITableViewDelegate{
 
 extension CalendarViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataArray.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // setup the cell
-        let cell = UITableViewCell()
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "reminderCell", for: indexPath)
+        
+        cell.detailTextLabel?.text = dataArray[indexPath.row][1]
+        cell.textLabel?.text = dataArray[indexPath.row][0]
+        
         return cell
     }
     
