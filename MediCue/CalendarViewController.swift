@@ -98,7 +98,7 @@ class CalendarViewController: UIViewController{
 extension CalendarViewController:  JTAppleCalendarViewDataSource{
     
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        print("")
+        
     }
     
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
