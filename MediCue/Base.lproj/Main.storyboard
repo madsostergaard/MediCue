@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -809,10 +810,14 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="injectionIcon" translatesAutoresizingMaskIntoConstraints="NO" id="2dJ-dJ-RhK">
                                                     <rect key="frame" x="16" y="2" width="72" height="72"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="2dJ-dJ-RhK" secondAttribute="height" multiplier="1:1" id="810-Rx-y3s"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DU0-8j-65s">
                                                     <rect key="frame" x="115" y="24" width="111" height="32"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" secondItem="DU0-8j-65s" secondAttribute="height" multiplier="111:32" id="lIp-jD-gEM"/>
                                                         <constraint firstAttribute="width" constant="111" id="rFi-RL-xjH"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
