@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import EventKit
 
 class MedicineTableViewController: UITableViewController {
     
@@ -41,13 +42,61 @@ class MedicineTableViewController: UITableViewController {
     }
     
     func save(medicine: Medicine){
-        //let thisRef = ref.childByAutoId().setValue()
-        
         let thisRef = self.ref.childByAutoId()
-        
         medicine.ref = thisRef.key
         thisRef.setValue(medicine.toAnyObject())
-        //print(thisRef)
+        
+        addReminders(medicine: medicine)
+    }
+    
+    func delete(medicine: Medicine){
+        let thisRef = self.ref.child(medicine.ref)
+        thisRef.removeValue()
+    }
+    
+    func addReminders(medicine: Medicine){
+        let eventStore = EKEventStore()
+        
+        if let calendar = eventStore.calendar(withIdentifier: UserDefaults.standard.string(forKey: "MediCuePrimaryCalendar")!) {
+            
+            print("we're in!")
+            
+            let newReminder = EKReminder(eventStore: eventStore)
+            newReminder.calendar = calendar
+            newReminder.title = medicine.name
+            
+            let someDate = Calendar.current.date(byAdding: .day, value: 0, to: Date())
+            let comps = Calendar.current.dateComponents([.year, .month, .day, .minute, .hour], from: someDate!)
+            newReminder.startDateComponents = comps
+            
+            let alarm = EKAlarm.init(absoluteDate: Calendar.current.date(byAdding: .minute, value: 1, to: Date())!)
+            //alarm.relativeOffset = 0
+            
+            newReminder.addAlarm(alarm)
+            
+            let recurrence = EKRecurrenceRule.init(recurrenceWith: EKRecurrenceFrequency.daily, interval: 2, end: EKRecurrenceEnd.init(end: Date.distantFuture))
+            
+            newReminder.addRecurrenceRule(recurrence)
+            newReminder.dueDateComponents = comps
+            
+            
+            do { try eventStore.save(newReminder, commit: true)
+                
+            } catch {
+                let alert = UIAlertController(title: "Event could not save", message: (error as Error).localizedDescription, preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                print(error)
+                alert.addAction(OKAction)
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
+        
+    }
+    
+    func removeReminders(medicine: Medicine){
+        
     }
     
     // function to create a test medicine
@@ -139,7 +188,6 @@ class MedicineTableViewController: UITableViewController {
             
             let medicineItem = medArr[indexPath.row]
             let thisRef = self.ref.child(medicineItem.ref)
-            //print(thisRef)
             thisRef.removeValue()
             
         } else if editingStyle == .insert {

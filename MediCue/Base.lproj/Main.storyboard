@@ -1089,7 +1089,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aften" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EL7-n9-A0I">
-                                                    <rect key="frame" x="8" y="13" width="42" height="21"/>
+                                                    <rect key="frame" x="8" y="13" width="42" height="21"/><constraints>
                                                         <constraint firstAttribute="height" constant="21" id="fiX-ly-doF"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
