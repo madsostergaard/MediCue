@@ -21,8 +21,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // set image color:
-        pillBoxIcon.tintColor = UIColor.white
         
         // update text fields:
         let date = Date(timeIntervalSinceNow: 0)

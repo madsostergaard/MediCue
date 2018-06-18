@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import JTAppleCalendar
+import UserNotifications
 
 enum SelectedStyle {
     case Dark
@@ -27,6 +28,8 @@ class CalendarViewController: UIViewController{
     
     let formatter = DateFormatter()
     var currentDate: Date = Date()
+    let center = UNUserNotificationCenter.current()
+    var requests = [UNNotificationRequest]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +37,28 @@ class CalendarViewController: UIViewController{
         setupCalendarView()
         
         title = makeTitleText()
+        
+        center.getPendingNotificationRequests { (request) in
+            print("getting notifications")
+            print(request.count)
+            var i = 0
+            for req in request{
+                print(i)
+                i += 1
+                print(req.content.title)
+                print(req.content.body)
+                if let trigger = req.trigger{
+                    if trigger.isKind(of: UNCalendarNotificationTrigger.self){
+                        self.requests.append(req)
+                        let thisTrigger = trigger as! UNCalendarNotificationTrigger
+                        print(thisTrigger.nextTriggerDate()!)
+                        let comps = thisTrigger.dateComponents
+                        print("Time: \(comps.hour!):\(comps.minute!), date: \(comps.weekday!)")
+                    }
+                }
+                
+            }
+        }
     }
     
     func makeTitleText(visibleDates: DateSegmentInfo) -> String{
@@ -87,6 +112,7 @@ class CalendarViewController: UIViewController{
         
         if cellState.isSelected{
             validCell.dateLabel.textColor = .white
+            validCell.selectedView.isHidden = false
         } else {
             if cellState.dateBelongsTo == .thisMonth{
                 validCell.dateLabel.textColor = .black
@@ -134,12 +160,28 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
         handleCellSelected(view: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
         
+        formatter.dateFormat = "dd MM yyyy, HH:mm"
+        print(formatter.string(from: date))
+        
+        for req in requests{
+            let trig = req.trigger as! UNCalendarNotificationTrigger
+            let dateComp = trig.dateComponents
+            let reqdate = Calendar.current.date(from: dateComp)
+            print(formatter.string(from: reqdate!))
+            
+            if Calendar.current.isDate(date, equalTo: reqdate!, toGranularity: .weekday){
+                print("Hooray!")
+            }
+        }
+        
         cell?.bounce()
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleCellSelected(view: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
+        
+        
         
         cell?.bounce()
     }

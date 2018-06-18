@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import EventKit
+import UserNotifications
 
 class MedicineTableViewController: UITableViewController {
     
@@ -44,9 +45,8 @@ class MedicineTableViewController: UITableViewController {
     func save(medicine: Medicine){
         let thisRef = self.ref.childByAutoId()
         medicine.ref = thisRef.key
-        thisRef.setValue(medicine.toAnyObject())
-        
-        addReminders(medicine: medicine)
+        let newMedicine = addReminders(medicine: medicine)
+        thisRef.setValue(newMedicine.toAnyObject())
     }
     
     func delete(medicine: Medicine){
@@ -54,49 +54,215 @@ class MedicineTableViewController: UITableViewController {
         thisRef.removeValue()
     }
     
-    func addReminders(medicine: Medicine){
-        let eventStore = EKEventStore()
+    func addReminders(medicine: Medicine) -> Medicine{
+        let notificationMaker = NotificationMaker()
+        let commands = ["MorningTime","FormiddagTime","MiddagTime",
+                        "EftermiddagTime","AftenTime","NatTime"]
         
-        if let calendar = eventStore.calendar(withIdentifier: UserDefaults.standard.string(forKey: "MediCuePrimaryCalendar")!) {
-            
-            print("we're in!")
-            
-            let newReminder = EKReminder(eventStore: eventStore)
-            newReminder.calendar = calendar
-            newReminder.title = medicine.name
-            
-            let someDate = Calendar.current.date(byAdding: .day, value: 0, to: Date())
-            let comps = Calendar.current.dateComponents([.year, .month, .day, .minute, .hour], from: someDate!)
-            newReminder.startDateComponents = comps
-            
-            let alarm = EKAlarm.init(absoluteDate: Calendar.current.date(byAdding: .minute, value: 1, to: Date())!)
-            //alarm.relativeOffset = 0
-            
-            newReminder.addAlarm(alarm)
-            
-            let recurrence = EKRecurrenceRule.init(recurrenceWith: EKRecurrenceFrequency.daily, interval: 2, end: EKRecurrenceEnd.init(end: Date.distantFuture))
-            
-            newReminder.addRecurrenceRule(recurrence)
-            newReminder.dueDateComponents = comps
-            
-            
-            do { try eventStore.save(newReminder, commit: true)
-                
-            } catch {
-                let alert = UIAlertController(title: "Event could not save", message: (error as Error).localizedDescription, preferredStyle: .alert)
-                let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                print(error)
-                alert.addAction(OKAction)
-                
-                self.present(alert, animated: true, completion: nil)
-            }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat =  "HH:mm"
+        
+        let title = medicine.name
+        let weekdays = medicine.weekdays
+        var pills = [Int]()
+        if let times = medicine.times {
+            pills = [times.morning!, times.lateMorning!, times.midday!, times.afternoon!, times.evening!, times.night!]
         }
         
         
+        let morningTime = UserDefaults.standard.string(forKey: commands[0])
+        let lateMorningTime = UserDefaults.standard.string(forKey: commands[1])
+        let middayTime = UserDefaults.standard.string(forKey: commands[2])
+        let afternoonTime = UserDefaults.standard.string(forKey: commands[3])
+        let eveningTime = UserDefaults.standard.string(forKey: commands[4])
+        let nightTime = UserDefaults.standard.string(forKey: commands[5])
+        let userTimes = [morningTime!, lateMorningTime!, middayTime!, afternoonTime!, eveningTime!, nightTime!]
+        
+        if weekdays["Man"]!{
+            for i in 0...pills.count-1 {
+                if pills[i] > 0 {
+                    let body = "Det er tid til at tage \(pills[i]) af \(medicine.name)"
+                    let identifier = UUID.init().uuidString
+                    medicine.identifiers.append(identifier)
+                    
+                    var dateTemp = Date()
+                    var date = Date()
+                    
+                    let timesTemp = userTimes[i].split(separator: ":")
+                    if let hour = Int(timesTemp[0]), let minute = Int(timesTemp[1]){
+                        dateTemp = Date.today().next(.monday)
+                        date = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: dateTemp)!
+                    }
+                    
+                    let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute,.second,], from: date)
+                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: triggerWeekly, repeats: true)
+                    
+                    print("added a monday time at \(userTimes[i])")
+                    
+                    notificationMaker.createNotification(title: title, subtitle: "", body: body, categoryIdentifier: "MedicineReminder", identifier: identifier, trigger: trigger)
+                }
+            }
+        }
+        if weekdays["Tirs"]!{
+            for i in 0...pills.count-1 {
+                if pills[i] > 0 {
+                    let body = "Det er tid til at tage \(pills[i]) af \(medicine.name)"
+                    let identifier = UUID.init().uuidString
+                    medicine.identifiers.append(identifier)
+                    
+                    var dateTemp = Date()
+                    var date = Date()
+                    
+                    let timesTemp = userTimes[i].split(separator: ":")
+                    if let hour = Int(timesTemp[0]), let minute = Int(timesTemp[1]){
+                        dateTemp = Date.today().next(.tuesday)
+                        date = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: dateTemp)!
+                    }
+                    
+                    let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute,.second,], from: date)
+                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: triggerWeekly, repeats: true)
+                    
+                    print("added a tuesday time at \(userTimes[i])")
+                    
+                    notificationMaker.createNotification(title: title, subtitle: "", body: body, categoryIdentifier: "MedicineReminder", identifier: identifier, trigger: trigger)
+                }
+            }
+        }
+        if weekdays["Ons"]!{
+            for i in 0...pills.count-1 {
+                if pills[i] > 0 {
+                    let body = "Det er tid til at tage \(pills[i]) af \(medicine.name)"
+                    let identifier = UUID.init().uuidString
+                    medicine.identifiers.append(identifier)
+                    
+                    var dateTemp = Date()
+                    var date = Date()
+                    
+                    let timesTemp = userTimes[i].split(separator: ":")
+                    if let hour = Int(timesTemp[0]), let minute = Int(timesTemp[1]){
+                        dateTemp = Date.today().next(.wednesday)
+                        date = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: dateTemp)!
+                    }
+                    
+                    let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute,.second,], from: date)
+                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: triggerWeekly, repeats: true)
+                    
+                    print("added a wednesday time at \(userTimes[i])")
+                    
+                    notificationMaker.createNotification(title: title, subtitle: "", body: body, categoryIdentifier: "MedicineReminder", identifier: identifier, trigger: trigger)
+                }
+            }
+        }
+        if weekdays["Tors"]!{
+            for i in 0...pills.count-1 {
+                if pills[i] > 0 {
+                    let body = "Det er tid til at tage \(pills[i]) af \(medicine.name)"
+                    let identifier = UUID.init().uuidString
+                    medicine.identifiers.append(identifier)
+                    
+                    var dateTemp = Date()
+                    var date = Date()
+                    
+                    let timesTemp = userTimes[i].split(separator: ":")
+                    if let hour = Int(timesTemp[0]), let minute = Int(timesTemp[1]){
+                        dateTemp = Date.today().next(.thursday)
+                        date = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: dateTemp)!
+                    }
+                    
+                    let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute,.second,], from: date)
+                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: triggerWeekly, repeats: true)
+                    
+                     print("added a thursday time at \(userTimes[i])")
+                    
+                    notificationMaker.createNotification(title: title, subtitle: "", body: body, categoryIdentifier: "MedicineReminder", identifier: identifier, trigger: trigger)
+                }
+            }
+        }
+        if weekdays["Fre"]!{
+            for i in 0...pills.count-1 {
+                if pills[i] > 0 {
+                    let body = "Det er tid til at tage \(pills[i]) af \(medicine.name)"
+                    let identifier = UUID.init().uuidString
+                    medicine.identifiers.append(identifier)
+                    
+                    var dateTemp = Date()
+                    var date = Date()
+                    
+                    let timesTemp = userTimes[i].split(separator: ":")
+                    if let hour = Int(timesTemp[0]), let minute = Int(timesTemp[1]){
+                        dateTemp = Date.today().next(.friday)
+                        date = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: dateTemp)!
+                    }
+                    
+                    let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute,.second,], from: date)
+                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: triggerWeekly, repeats: true)
+                    
+                    print("added a friday time at \(userTimes[i])")
+                    
+                    notificationMaker.createNotification(title: title, subtitle: "", body: body, categoryIdentifier: "MedicineReminder", identifier: identifier, trigger: trigger)
+                }
+            }
+        }
+        if weekdays["Lør"]!{
+            for i in 0...pills.count-1 {
+                if pills[i] > 0 {
+                    let body = "Det er tid til at tage \(pills[i]) af \(medicine.name)"
+                    let identifier = UUID.init().uuidString
+                    medicine.identifiers.append(identifier)
+                    
+                    var dateTemp = Date()
+                    var date = Date()
+                    
+                    let timesTemp = userTimes[i].split(separator: ":")
+                    if let hour = Int(timesTemp[0]), let minute = Int(timesTemp[1]){
+                        dateTemp = Date.today().next(.saturday)
+                        date = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: dateTemp)!
+                    }
+                    
+                    let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute,.second,], from: date)
+                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: triggerWeekly, repeats: true)
+                    
+                    print("added a saturday time at \(userTimes[i])")
+                    
+                    notificationMaker.createNotification(title: title, subtitle: "", body: body, categoryIdentifier: "MedicineReminder", identifier: identifier, trigger: trigger)
+                }
+            }
+        }
+        if weekdays["Søn"]!{
+            for i in 0...pills.count-1 {
+                if pills[i] > 0 {
+                    let body = "Det er tid til at tage \(pills[i]) af \(medicine.name)"
+                    let identifier = UUID.init().uuidString
+                    medicine.identifiers.append(identifier)
+                    
+                    var dateTemp = Date()
+                    var date = Date()
+                    
+                    let timesTemp = userTimes[i].split(separator: ":")
+                    if let hour = Int(timesTemp[0]), let minute = Int(timesTemp[1]){
+                        dateTemp = Date.today().next(.sunday)
+                        date = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: dateTemp)!
+                    }
+                    
+                    print(Calendar.current.dateComponents([.weekday,.hour,.minute], from: date))
+                    
+                    let triggerWeekly = Calendar.current.dateComponents([.weekday,.hour,.minute], from: date)
+                    let trigger = UNCalendarNotificationTrigger.init(dateMatching: triggerWeekly, repeats: true)
+                    
+                    print("added a sunday time at \(userTimes[i])")
+                    
+                    notificationMaker.createNotification(title: title, subtitle: "", body: body, categoryIdentifier: "MedicineReminder", identifier: identifier, trigger: trigger)
+                }
+            }
+        }
+        
+        return medicine
     }
     
     func removeReminders(medicine: Medicine){
+        let center = UNUserNotificationCenter.current()
         
+        center.removeDeliveredNotifications(withIdentifiers: medicine.identifiers)
     }
     
     // function to create a test medicine
@@ -189,6 +355,7 @@ class MedicineTableViewController: UITableViewController {
             let medicineItem = medArr[indexPath.row]
             let thisRef = self.ref.child(medicineItem.ref)
             thisRef.removeValue()
+            removeReminders(medicine: medicineItem)
             
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -237,3 +404,83 @@ class MedicineCell: UITableViewCell{
     @IBOutlet weak var medicineFreqLabel: UILabel!
     @IBOutlet weak var medicineNameLabel: UILabel!
 }
+
+extension Date {
+    
+    static func today() -> Date {
+        return Date()
+    }
+    
+    func next(_ weekday: Weekday, considerToday: Bool = false) -> Date {
+        return get(.Next,
+                   weekday,
+                   considerToday: considerToday)
+    }
+    
+    func previous(_ weekday: Weekday, considerToday: Bool = false) -> Date {
+        return get(.Previous,
+                   weekday,
+                   considerToday: considerToday)
+    }
+    
+    func get(_ direction: SearchDirection,
+             _ weekDay: Weekday,
+             considerToday consider: Bool = false) -> Date {
+        
+        let dayName = weekDay.rawValue
+        
+        let weekdaysName = getWeekDaysInEnglish().map { $0.lowercased() }
+        
+        assert(weekdaysName.contains(dayName), "weekday symbol should be in form \(weekdaysName)")
+        
+        let searchWeekdayIndex = weekdaysName.index(of: dayName)! + 1
+        
+        let calendar = Calendar(identifier: .gregorian)
+        
+        if consider && calendar.component(.weekday, from: self) == searchWeekdayIndex {
+            return self
+        }
+        
+        var nextDateComponent = DateComponents()
+        nextDateComponent.weekday = searchWeekdayIndex
+        
+        
+        let date = calendar.nextDate(after: self,
+                                     matching: nextDateComponent,
+                                     matchingPolicy: .nextTime,
+                                     direction: direction.calendarSearchDirection)
+        
+        return date!
+    }
+    
+}
+
+// MARK: Helper methods
+extension Date {
+    func getWeekDaysInEnglish() -> [String] {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = Locale(identifier: "en_US_POSIX")
+        return calendar.weekdaySymbols
+    }
+    
+    enum Weekday: String {
+        case monday, tuesday, wednesday, thursday, friday, saturday, sunday
+    }
+    
+    enum SearchDirection {
+        case Next
+        case Previous
+        
+        var calendarSearchDirection: Calendar.SearchDirection {
+            switch self {
+            case .Next:
+                return .forward
+            case .Previous:
+                return .backward
+            }
+        }
+    }
+}
+
+
+

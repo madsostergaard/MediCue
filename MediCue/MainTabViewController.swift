@@ -50,7 +50,7 @@ class MainTabBar: UITabBar{
     
     func setupMiddleButton() {
         middleButton.frame.size = CGSize(width: 70, height: 70)
-        middleButton.backgroundColor = UIColor(named: "MainColor")
+        middleButton.backgroundColor = UIColor(named: "ThirdColor")
         middleButton.layer.cornerRadius = 35
         middleButton.layer.masksToBounds = true
         if let image = UIImage(named: "homeicon.png")?.withRenderingMode(.alwaysTemplate){

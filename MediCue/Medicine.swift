@@ -51,6 +51,7 @@ class Medicine: NSObject{
     var times: MedicineTimes?
     var medType: MedicineType?
     var buyNewMeds: Bool = false
+    var identifiers = [String]()
     
     enum MedicineType: String{
         case injektion, tablet, pill
@@ -103,6 +104,11 @@ class Medicine: NSObject{
             frequency = MedicineTimes.interval.weekly
         }
         
+        let identifiersValues = snapshot.childSnapshot(forPath: "identifiers").value as! [String]
+        for i in 0...identifiersValues.count-1{
+            identifiers.append(identifiersValues[i])
+        }
+        
         ref = snapshotValues["ref"] as! String
         
         let weekdayValues = snapshot.childSnapshot(forPath: "weekdays").value as! [String : AnyObject]
@@ -144,6 +150,7 @@ class Medicine: NSObject{
                 "Lør" : weekdays["Lør"]!,
                 "Søn" : weekdays["Søn"]!
             ],
+            "identifiers" : identifiers,
             "medTimes" : [
                 "morning" : times!.morning!,
                 "lateMorning" : times!.lateMorning!,

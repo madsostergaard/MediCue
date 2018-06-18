@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import EventKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate {
@@ -21,12 +22,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
     var eventstore: EKEventStore!
     let triggerManager = ESTTriggerManager()
     var ref: DatabaseReference!
+    let center = UNUserNotificationCenter.current()
+    let options: UNAuthorizationOptions = [.alert, .sound]
+    let notificationCenterDelegate = NotificationDelegate()
+    let notificationMaker = NotificationMaker()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
         eventstore = EKEventStore()
+        
+        center.requestAuthorization(options: options) {
+            (granted, error) in
+            if !granted {
+                print("Something went wrong")
+            }
+        }
+        center.delegate = notificationCenterDelegate
+        //center.removeAllPendingNotificationRequests()
+        
+        let takenAction = UNNotificationAction(identifier: "Taken",
+                                                title: "Marker som taget", options: [])
+        let deleteAction = UNNotificationAction(identifier: "UYLDeleteAction",
+                                                title: "Fjern", options: [.destructive])
+        
+        let medicineCategory = UNNotificationCategory(identifier: "MedicineReminder",
+                                              actions: [takenAction,deleteAction],
+                                              intentIdentifiers: [], options: [])
+        
+        let snoozeAction = UNNotificationAction(identifier: "Snooze", title: "OK", options: [])
+        
+        let boxCategory = UNNotificationCategory(identifier: "PillBox", actions: [snoozeAction,deleteAction], intentIdentifiers: [], options: [])
+        
+        center.setNotificationCategories([medicineCategory, boxCategory])
+        
+        notificationMaker.createNotification(title: "Tag medicin", subtitle: "NU!", body: "Du skal tage en milliard piller", categoryIdentifier: "MedicineReminder", identifier: "MyFavoriteNotification", trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: 60, repeats: false))
         
         
         // check if we have access to calendars, and create a calendar for the app.
@@ -73,11 +104,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
         }
         
         self.triggerManager.delegate = self
-        let rule1 = ESTOrientationRule.orientationEquals(.horizontalUpsideDown, for: .car)
+        _ = ESTOrientationRule.orientationEquals(.horizontalUpsideDown, for: .car)
         //let rule3 = ESTProximityRule.inRangeOfNearableIdentifier("3a5bec086df14f2e")
-        let trigger = ESTTrigger(rules: [rule1], identifier: "tom the trigger")
+        let rule2 = ESTProximityRule.outsideRange(ofNearableIdentifier: "7946c1b3ad6b2184")
+        let trigger2 = ESTTrigger(rules: [rule2], identifier: "leave the beacon")
         
-        self.triggerManager.startMonitoring(for: trigger)
+        self.triggerManager.startMonitoring(for: trigger2)
         
         print("Done!")
         
@@ -86,12 +118,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
     
     func triggerManager(_ manager: ESTTriggerManager,
                         triggerChangedState trigger: ESTTrigger) {
-        if (trigger.identifier == "tom the trigger" && trigger.state == true) {
+        if (trigger.identifier == "leave the beacon" && trigger.state == true) {
             print("Hello, digital world! The physical world has spoken.")
-            makeAModalView(message: "Hello, digital world! The physical world has spoken.")
+            notificationMaker.createNotification(title: "Pilleæske-advarsel!", subtitle: "", body: "Du er på vej væk fra din medicinæske.", categoryIdentifier: "PillBox", identifier: "distanceNotification", trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: 1.0, repeats: false))
         } else {
             print("Goodnight. <spoken in the voice of a turret from Portal>")
-            makeAModalView(message: "Goodnight. <spoken in the voice of a turret from Portal>")
+            notificationMaker.createNotification(title: "Pilleæske", subtitle: "", body: "Nu er du i nærheden af æsken igen.", categoryIdentifier: "PillBox", identifier: "distanceNotification", trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: 1.0, repeats: false))
         }
     }
     

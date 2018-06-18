@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		090BE45C20D291B5008C33E2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 090BE45B20D291B5008C33E2 /* GoogleService-Info.plist */; };
 		09851D5920D3AB800031FFEB /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09851D5820D3AB800031FFEB /* CustomCell.swift */; };
+		09851D5B20D7B8F60031FFEB /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09851D5A20D7B8F60031FFEB /* NotificationDelegate.swift */; };
+		09851D5D20D7BA130031FFEB /* NotificationMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09851D5C20D7BA130031FFEB /* NotificationMaker.swift */; };
 		09B6A0E720D27EE8001E8556 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B6A0E620D27EE8001E8556 /* AppDelegate.swift */; };
 		09B6A0EC20D27EE8001E8556 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09B6A0EA20D27EE8001E8556 /* Main.storyboard */; };
 		09B6A0EE20D27EEA001E8556 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09B6A0ED20D27EEA001E8556 /* Assets.xcassets */; };
@@ -53,6 +55,8 @@
 /* Begin PBXFileReference section */
 		090BE45B20D291B5008C33E2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09851D5820D3AB800031FFEB /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		09851D5A20D7B8F60031FFEB /* NotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
+		09851D5C20D7BA130031FFEB /* NotificationMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationMaker.swift; sourceTree = "<group>"; };
 		09B6A0E320D27EE8001E8556 /* MediCue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediCue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09B6A0E620D27EE8001E8556 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09B6A0EB20D27EE8001E8556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 				09B6A11920D28171001E8556 /* ProgressViewController.swift */,
 				09B6A11720D28135001E8556 /* SetTimesTableViewController.swift */,
 				09B6A11520D280F1001E8556 /* SettingsTableViewController.swift */,
+				09851D5A20D7B8F60031FFEB /* NotificationDelegate.swift */,
+				09851D5C20D7BA130031FFEB /* NotificationMaker.swift */,
 			);
 			path = MediCue;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				09B6A12020D28231001E8556 /* Medicine.swift in Sources */,
 				09B6A12E20D28420001E8556 /* AddMedicineTimesViewController.swift in Sources */,
 				09B6A12220D2827D001E8556 /* MainTabViewController.swift in Sources */,
+				09851D5B20D7B8F60031FFEB /* NotificationDelegate.swift in Sources */,
 				09851D5920D3AB800031FFEB /* CustomCell.swift in Sources */,
 				09B6A11620D280F1001E8556 /* SettingsTableViewController.swift in Sources */,
 				09B6A11E20D281DF001E8556 /* MedicineDetailsViewController.swift in Sources */,
@@ -451,6 +458,7 @@
 				09B6A11C20D281B4001E8556 /* MedicineTableViewController.swift in Sources */,
 				09B6A11820D28135001E8556 /* SetTimesTableViewController.swift in Sources */,
 				09B6A11A20D28171001E8556 /* ProgressViewController.swift in Sources */,
+				09851D5D20D7BA130031FFEB /* NotificationMaker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
