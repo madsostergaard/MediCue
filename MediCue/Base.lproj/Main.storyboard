@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -236,6 +236,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JcF-kW-krJ">
                                 <rect key="frame" x="0.0" y="323.5" width="320" height="195.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Ac3-IX-j4A" id="3XE-cy-K0f"/>
+                                    <outlet property="delegate" destination="Ac3-IX-j4A" id="RY1-o6-JPe"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" name="SecondColor"/>
@@ -261,6 +265,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="calendarView" destination="cPf-aF-PDf" id="N3x-oY-2kQ"/>
+                        <outlet property="reminderView" destination="JcF-kW-krJ" id="EvC-Mj-g7M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P9l-st-PVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1094,7 +1099,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aften" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EL7-n9-A0I">
-                                                    <rect key="frame" x="8" y="13" width="42" height="21"/><constraints>
+                                                    <rect key="frame" x="8" y="10" width="42" height="21"/>
+                                                    <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="fiX-ly-doF"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1102,7 +1108,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eB-HQ-Cdc">
-                                                    <rect key="frame" x="270" y="12" width="42" height="21"/>
+                                                    <rect key="frame" x="270" y="14.5" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="SecondColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1124,7 +1130,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLG-hm-U7E">
-                                                    <rect key="frame" x="8" y="12" width="28" height="21"/>
+                                                    <rect key="frame" x="8" y="14.5" width="28" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="PHw-Yo-7ao"/>
                                                     </constraints>
@@ -1133,7 +1139,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPd-cT-iGr">
-                                                    <rect key="frame" x="270" y="12" width="42" height="21"/>
+                                                    <rect key="frame" x="270" y="14.5" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="SecondColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1360,7 +1366,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YlU-qf-Ks9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="epN-vF-2NJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4453" y="600"/>
+            <point key="canvasLocation" x="4637" y="600"/>
         </scene>
         <!--Main Tab View Controller-->
         <scene sceneID="LzQ-6N-ujM">
@@ -2110,7 +2116,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g8Z-FM-hKo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5064" y="600"/>
+            <point key="canvasLocation" x="5505" y="600"/>
         </scene>
     </scenes>
     <resources>

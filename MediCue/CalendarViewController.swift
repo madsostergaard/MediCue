@@ -23,6 +23,8 @@ class CalendarViewController: UIViewController{
         self.calendarView.scrollToDate(self.currentDate, triggerScrollToDateDelegate: true, animateScroll: true);
     }
     
+    @IBOutlet weak var reminderView: UITableView!
+    
     let formatter = DateFormatter()
     var currentDate: Date = Date()
     
@@ -138,6 +140,8 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleCellSelected(view: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
+        
+        cell?.bounce()
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
@@ -157,4 +161,22 @@ extension UIView{
                        animations: {
             self.transform = CGAffineTransform(scaleX: 1, y: 1) })
     }
+}
+
+extension CalendarViewController: UITableViewDelegate{
+    
+}
+
+extension CalendarViewController: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // setup the cell
+        let cell = UITableViewCell()
+        return cell
+    }
+    
+    
 }
