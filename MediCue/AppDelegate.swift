@@ -29,10 +29,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Setup needed resources:
+        // - Firebase:
         FirebaseApp.configure()
         
-        eventstore = EKEventStore()
-        
+        // - UserNotifications
         center.requestAuthorization(options: options) {
             (granted, error) in
             if !granted {
@@ -40,7 +42,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
             }
         }
         center.delegate = notificationCenterDelegate
+        
+        // - Estimote Beacons
+        ESTConfig.setupAppID("medicue-0jx", andAppToken: "4667a2c1dfc99ea7faacf037bb54cb4f")
+        self.triggerManager.delegate = self
+        
+        // - Calendar:
+        //eventstore = EKEventStore()
+        
+        // Remove all notificationrequests
         //center.removeAllPendingNotificationRequests()
+        
         
         let takenAction = UNNotificationAction(identifier: "Taken",
                                                 title: "Marker som taget", options: [])
@@ -61,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
         
         
         // check if we have access to calendars, and create a calendar for the app.
-        eventstore.requestAccess(to: .reminder) { (granted, error) in
+        /*eventstore.requestAccess(to: .reminder) { (granted, error) in
             if granted {
                 print("access granted")
                 let newCalendar = EKCalendar(for: .reminder, eventStore: self.eventstore!)
@@ -101,9 +113,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
             } else {
                 print(error!)
             }
-        }
+        }*/
         
-        self.triggerManager.delegate = self
+        
         _ = ESTOrientationRule.orientationEquals(.horizontalUpsideDown, for: .car)
         //let rule3 = ESTProximityRule.inRangeOfNearableIdentifier("3a5bec086df14f2e")
         let rule2 = ESTProximityRule.outsideRange(ofNearableIdentifier: "7946c1b3ad6b2184")
@@ -111,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
         
         self.triggerManager.startMonitoring(for: trigger2)
         
-        print("Done!")
+        print("Done with app setup!")
         
         return true
     }
