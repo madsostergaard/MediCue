@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import EventKit
 import UserNotifications
+import EstimoteProximitySDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate {
@@ -19,13 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
                     "EftermiddagTime","AftenTime","NatTime"]
     let times = ["06:00","10:00","12:00","16:00","18:00","22:00"]
 
-    var eventstore: EKEventStore!
+    //var eventstore: EKEventStore!
     let triggerManager = ESTTriggerManager()
     var ref: DatabaseReference!
     let center = UNUserNotificationCenter.current()
     let options: UNAuthorizationOptions = [.alert, .sound]
     let notificationCenterDelegate = NotificationDelegate()
     let notificationMaker = NotificationMaker()
+    var proximityZones = [EPXProximityZone]()
+    var proximityObserver: EPXProximityObserver?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -44,15 +47,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
         center.delegate = notificationCenterDelegate
         
         // - Estimote Beacons
-        ESTConfig.setupAppID("medicue-0jx", andAppToken: "4667a2c1dfc99ea7faacf037bb54cb4f")
-        self.triggerManager.delegate = self
+        //ESTConfig.setupAppID("medicue-0jx", andAppToken: "4667a2c1dfc99ea7faacf037bb54cb4f")
+        let cloudCredentials = EPXCloudCredentials(appID: "medicue-0jx", appToken: "4667a2c1dfc99ea7faacf037bb54cb4f")
+        proximityObserver = EPXProximityObserver(credentials: cloudCredentials, errorBlock: { error in
+            print("proximity observer error: \(error)")
+        })
+        
+        defineProximityZones()
+        if let proximityObserver = proximityObserver {
+            proximityObserver.startObserving(proximityZones)
+            print("Start observing the pill box!")
+        }
+        
+        //self.triggerManager.delegate = self
         
         // - Calendar:
         //eventstore = EKEventStore()
         
         // Remove all notificationrequests
-        //center.removeAllPendingNotificationRequests()
-        
         
         let takenAction = UNNotificationAction(identifier: "Taken",
                                                 title: "Marker som taget", options: [])
@@ -69,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
         
         center.setNotificationCategories([medicineCategory, boxCategory])
         
-        notificationMaker.createNotification(title: "Tag medicin", subtitle: "NU!", body: "Du skal tage en milliard piller", categoryIdentifier: "MedicineReminder", identifier: "MyFavoriteNotification", trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: 60, repeats: false))
+        notificationMaker.createNotification(title: "Tag medicin", subtitle: "Panodil", body: "Det er tid til at tage 2 af Panodil", categoryIdentifier: "MedicineReminder", identifier: "MyFavoriteNotification", trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: 60, repeats: false))
         
         
         // check if we have access to calendars, and create a calendar for the app.
@@ -115,13 +127,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
             }
         }*/
         
-        
+        /*
         _ = ESTOrientationRule.orientationEquals(.horizontalUpsideDown, for: .car)
         //let rule3 = ESTProximityRule.inRangeOfNearableIdentifier("3a5bec086df14f2e")
         let rule2 = ESTProximityRule.outsideRange(ofNearableIdentifier: "7946c1b3ad6b2184")
         let trigger2 = ESTTrigger(rules: [rule2], identifier: "leave the beacon")
         
-        self.triggerManager.startMonitoring(for: trigger2)
+        self.triggerManager.startMonitoring(for: trigger2)*/
         
         print("Done with app setup!")
         
@@ -139,10 +151,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ESTTriggerManagerDelegate
         }
     }
     
-    func makeAModalView(message: String){
-        let alert = UIAlertController(title: "Hello", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-        self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+    func defineProximityZones(){
+        let pillBox = "pillBox"
+        let zonePillBox = EPXProximityZone(range: EPXProximityRange.custom(desiredMeanTriggerDistance: 1)!, attachmentKey: "pill", attachmentValue: pillBox)
+        
+        zonePillBox.onEnterAction = { attachment in
+            self.notificationMaker.createNotification(title: "Pilleæske", subtitle: "", body: "Du er meget tæt på æsken. Skal du tage noget medicin?", categoryIdentifier: "PillBox", identifier: "distanceNotification", trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: 1.0, repeats: false))
+        }
+        
+        zonePillBox.onExitAction = { attachment in
+            print("Exiting near zone")
+        }
+        
+        zonePillBox.onChangeAction = { attachments in
+            let rooms = attachments.compactMap {
+                $0.payload["pill"]
+            }
+            print("Nearby \(pillBox) rooms: \(rooms)")
+        }
+        
+        let zonePillBoxFar = EPXProximityZone(range: EPXProximityRange.custom(desiredMeanTriggerDistance: 10)!, attachmentKey: "pill", attachmentValue: pillBox)
+        
+        zonePillBoxFar.onExitAction = { attachments in
+            self.notificationMaker.createNotification(title: "Pilleæske-advarsel!", subtitle: "Har du glemt din æske?", body: "Du er på vej (langt) væk fra din medicinæske.", categoryIdentifier: "PillBox", identifier: "distanceNotification", trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: 1.0, repeats: false))
+        }
+        
+        zonePillBoxFar.onEnterAction = { attachments in
+            self.notificationMaker.createNotification(title: "Pilleæske", subtitle: "", body: "Du er i nærheden af æsken.", categoryIdentifier: "PillBox", identifier: "distanceNotification", trigger: UNTimeIntervalNotificationTrigger.init(timeInterval: 1.0, repeats: false))
+        }
+        
+        proximityZones.append(zonePillBox)
+        proximityZones.append(zonePillBoxFar)
     }
 
 

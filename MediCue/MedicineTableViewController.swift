@@ -265,7 +265,7 @@ class MedicineTableViewController: UITableViewController {
     func removeReminders(medicine: Medicine){
         let center = UNUserNotificationCenter.current()
         
-        center.removeDeliveredNotifications(withIdentifiers: medicine.identifiers)
+        center.removePendingNotificationRequests(withIdentifiers: medicine.identifiers)
     }
     
     // function to create a test medicine

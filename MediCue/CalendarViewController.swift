@@ -39,25 +39,27 @@ class CalendarViewController: UIViewController{
         
         title = makeTitleText()
         
+        loadRequests(refresh: false)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        loadRequests(refresh: true)
+    }
+    
+    func loadRequests(refresh: Bool){
+        if refresh {
+            requests = [UNNotificationRequest]()
+        }
+        
         center.getPendingNotificationRequests { (request) in
-            print("getting notifications")
-            print(request.count)
-            var i = 0
             for req in request{
-                print(i)
-                i += 1
-                print(req.content.title)
-                print(req.content.body)
                 if let trigger = req.trigger{
                     if trigger.isKind(of: UNCalendarNotificationTrigger.self){
                         self.requests.append(req)
-                        let thisTrigger = trigger as! UNCalendarNotificationTrigger
-                        print(thisTrigger.nextTriggerDate()!)
-                        let comps = thisTrigger.dateComponents
-                        print("Time: \(comps.hour!):\(comps.minute!), date: \(comps.weekday!)")
                     }
                 }
-                
             }
         }
     }
@@ -97,6 +99,7 @@ class CalendarViewController: UIViewController{
         self.calendarView.selectDates([self.currentDate]);
         self.calendarView.reloadData();
         self.calendarView.scrollToDate(self.currentDate, triggerScrollToDateDelegate: false, animateScroll: false);
+        
     }
     
     func handleCellSelected(view: JTAppleCell?, cellState: CellState){
@@ -165,7 +168,6 @@ extension CalendarViewController: JTAppleCalendarViewDelegate {
         formatter.dateFormat = "dd MM yyyy, HH:mm"
         let cellComp = Calendar.current.dateComponents([.weekday], from: date)
         print(formatter.string(from: date))
-        
         
         for req in requests{
             let trig = req.trigger as! UNCalendarNotificationTrigger
